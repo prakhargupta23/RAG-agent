@@ -1,0 +1,8 @@
+langchain
+langchain-community
+langgraph
+openai
+pyodbc
+sqlalchemy
+flask
+python-dotenv
