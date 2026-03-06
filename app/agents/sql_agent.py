@@ -1,16 +1,35 @@
-from langchain.chat_models import init_chat_model
-from langchain_community.agent_toolkits import SQLDatabaseToolkit
-from langchain.agents import create_agent
-from app.config.database import db
-from app.agents.prompts import SYSTEM_PROMPT
+from google import genai
+from app.agents.prompt import SYSTEM_PROMPT
+from app.config.database import fetch_data
 
-model = init_chat_model("openai:gpt-4o-mini")
 
-toolkit = SQLDatabaseToolkit(db=db, llm=model)
-tools = toolkit.get_tools()
+# The client gets the API key from the environment variable `GEMINI_API_KEY`.
+client = genai.Client(api_key="AIzaSyBJxlF2i-oFTRYA-kqcvRILYuviJJOQ7C8")
+def get_sql_query(question):
+    
+    prompt=SYSTEM_PROMPT["test"]
+    print("this is prompt",prompt)
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite-preview", contents=f"""Hi ,you are SAAR(Samrt AI assistant for Railways){prompt},{question}, give your reply in a readable para format without any special characters"""
+    )
+    print("this is response",response)
+    reply=response.text
+    type_flag, content = reply.split(":", 1)
 
-agent = create_agent(
-    model,
-    tools,
-    system_prompt=SYSTEM_PROMPT,
-)
+    if type_flag == "1":
+        return content
+
+    elif type_flag == "2":
+        sql_query = content
+        # run SQL query
+        sql_response = get_text_query(question)
+        print("this is sql response",sql_response)
+        return sql_response
+
+def get_text_query(question):
+    prompt=SYSTEM_PROMPT["pfaPrompt"]
+    response = client.models.generate_content(
+        model="gemini-3.1-pro-preview", contents=f"""Hi ,you are SAAR(Samrt AI assistant for Railways){prompt},{question}, give your reply in a readable para format without any special characters"""
+    )
+    reply=response.text
+    return reply

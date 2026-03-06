@@ -33,7 +33,7 @@ print("✅ Connected successfully!")
 # Fetch 1000 rows
 try:
     with engine.connect() as conn:
-        result = conn.execute(text("SELECT TOP 1000 * FROM TaskData"))
+        result = conn.execute(text("SELECT TOP 1000 * FROM earning"))
         rows = result.fetchall()
 
         print(f"\nFetched {len(rows)} rows\n")

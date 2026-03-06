@@ -4,7 +4,6 @@ import os
 import urllib
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
-from langchain_community.utilities import SQLDatabase
 
 load_dotenv()
 
@@ -29,19 +28,27 @@ connection_string = f"mssql+pyodbc:///?odbc_connect={params}"
 # Create SQLAlchemy engine
 engine = create_engine(connection_string)
 
-# SQLDatabase wrapper for LangChain
-db = SQLDatabase(engine)
+def fetch_data(query):
 
-def execute_query(query: str, params: dict = None):
-    """Executes a SQL query and returns the results as a list of dictionaries."""
+    print("✅ Connected successfully!")
+
+    # Fetch 1000 rows
     try:
         with engine.connect() as conn:
-            result = conn.execute(text(query), params or {})
-            if result.returns_rows:
-                # Convert rows to dictionaries for easier JSON serialization
-                return [dict(row._mapping) for row in result.fetchall()]
-            return {"message": "Query executed successfully, no rows returned."}
-    except Exception as e:
-        print(f"❌ Error running query: {e}")
-        raise e
+            print("this is query",query)
+            result = conn.execute(text(query))
+            rows = result.fetchall()
 
+            print(f"\nFetched {len(rows)} rows\n")
+
+            # Print only first 5 rows to avoid console flood
+            for row in rows[:5]:
+                print("hello",row)
+            print("this is rows",rows,type(rows))
+            return rows
+
+    except Exception as e:
+        print("❌ Error running query:", e)
+        return None
+
+    
