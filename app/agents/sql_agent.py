@@ -14,7 +14,7 @@ def get_sql_query(question):
     prompt=SYSTEM_PROMPT["new_db1"]
     # print("this is prompt",prompt)
     response = client.models.generate_content(
-        model="gemini-3.1-flash-lite-preview", contents=f"""Hi ,you are SAAR(Smart AI assistant for Railways){prompt},{question}, give your reply in a readable para format without any special characters"""
+        model="gemini-3.1-pro-preview", contents=f"""{prompt},{question}, give your reply in a readable para format without any special characters"""
     )
     print("this is response",response)
     reply=response.text
@@ -36,7 +36,7 @@ def get_sql_query(question):
         prompt=SYSTEM_PROMPT["test1"]
         response = client.models.generate_content(
             model="gemini-3.1-flash-lite-preview",
-            contents=f"""Hi ,you are SAAR (Smart AI assistant for Railways)\n\nInstructions - {prompt}\n\nUser Query - {question}\n\nSQL Query - {content}\n\nData - {data}\n\nGive your reply in a readable paragraph format without special characters."""
+            contents=f"""{prompt}\n\nUser Query - {question}\n\nSQL Query - {content}\n\nData - {data}\n\n"""
         )
         return response.text
 
