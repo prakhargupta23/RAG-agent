@@ -33,7 +33,7 @@ print("✅ Connected successfully!")
 # Fetch 1000 rows
 try:
     with engine.connect() as conn:
-        result = conn.execute(text("SELECT TOP 1000 * FROM earning"))
+        result = conn.execute(text("SELECT SUM(CAST(actualForMonth AS FLOAT)) AS total_working_expenditure FROM WorkingExpenses WHERE category = 'TOTAL' AND selectedMonthYear = '12/2025'"))
         rows = result.fetchall()
 
         print(f"\nFetched {len(rows)} rows\n")
