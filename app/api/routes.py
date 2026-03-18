@@ -13,7 +13,7 @@ def ask_whatsapp():
 @api.route("/ask-voice", methods=["POST"])
 def ask_voice():
     question = request.json.get("question")
-    answer = ask_question(question)
+    answer = ask_question_from_dashboard(question)
     return jsonify({"answer": answer})
 
 # @api.route("/tasks", methods=["GET"])
