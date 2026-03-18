@@ -4,6 +4,9 @@ from app.agents.sql_agent import get_sql_query
 def ask_question(question: str):
     return get_sql_query(question)
 
+def ask_question_from_dashboard(question: str):
+    return get_answer(question)
+
 # def fetch_task_data(limit: int = 100):
 #     """
 #     Business logic to fetch task data from the database.
