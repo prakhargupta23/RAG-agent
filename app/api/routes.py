@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.services.query_service import ask_question
+from app.services.query_service import ask_question,ask_question_from_dashboard
 
 api = Blueprint("api", __name__)
 
