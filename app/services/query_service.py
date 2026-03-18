@@ -1,4 +1,4 @@
-from app.agents.sql_agent import get_sql_query
+from app.agents.sql_agent import get_sql_query,get_answer
 #from app.config.database import execute_query
 
 def ask_question(question: str):
