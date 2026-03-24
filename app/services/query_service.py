@@ -1,4 +1,5 @@
 from app.agents.sql_agent import get_sql_query,get_answer
+from app.agents.summary_agent import get_summary
 #from app.config.database import execute_query
 
 def ask_question(question: str):
@@ -6,6 +7,9 @@ def ask_question(question: str):
 
 def ask_question_from_dashboard(question: str):
     return get_answer(question)
+
+def generate_file_summary(base64: str, prompt: str):
+    return get_summary(prompt,base64)
 
 # def fetch_task_data(limit: int = 100):
 #     """

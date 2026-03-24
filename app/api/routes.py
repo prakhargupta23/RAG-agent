@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.services.query_service import ask_question,ask_question_from_dashboard
+from app.services.query_service import ask_question,ask_question_from_dashboard,generate_file_summary
 
 api = Blueprint("api", __name__)
 
@@ -14,6 +14,14 @@ def ask_whatsapp():
 def ask_voice():
     question = request.json.get("question")
     answer = ask_question_from_dashboard(question)
+    return jsonify({"answer": answer})
+
+
+@api.route("/generate-summary", methods=["POST"])
+def generate_summary():
+    base64=request.json.get("base64")
+    prompt=request.json.get("prompt")
+    answer=generate_file_summary(base64, prompt)
     return jsonify({"answer": answer})
 
 # @api.route("/tasks", methods=["GET"])
